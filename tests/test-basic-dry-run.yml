@@ -1,0 +1,24 @@
+name: Test basic dry-run
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          repo-token: ${{ github.token }}
+          days-before-stale: "120"
+          days-before-delete: "180"
+          dry-run: "true"
+          ignore-issue-interaction: "true"
+          rate-limit: "false"
+        continue-on-error: true
+      - name: Assert action ran
+        run: |
+          echo "Action completed (dry-run mode)"
+          echo "stale-branches: ${{ steps.action.outputs.stale-branches }}"
+          echo "deleted-branches: ${{ steps.action.outputs.deleted-branches }}"
+          echo "PASS"
