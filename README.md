@@ -8,6 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
+| v8.2.0 | [`v8.2.0`](https://github.com/chainguard-actions/crs-k-stale-branches/tree/v8.2.0) | [`1b1680a`](https://github.com/crs-k/stale-branches/commit/1b1680a1ec7ef3845980fe7b4871b88011fc5dcf) |
 | v9.0.1 | [`v9.0.1`](https://github.com/chainguard-actions/crs-k-stale-branches/tree/v9.0.1) | [`e876b95`](https://github.com/crs-k/stale-branches/commit/e876b957ab08f0bad43c8cc271a22cdd7604bd09) |
 
 ## Privacy
