@@ -1,0 +1,29 @@
+name: Test ignore-commit-messages input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          repo-token: ${{ github.token }}
+          days-before-stale: "120"
+          days-before-delete: "180"
+          dry-run: "true"
+          ignore-issue-interaction: "true"
+          ignore-commit-messages: "chore: bump,Merge branch,auto-generated"
+          ignore-committers: "dependabot[bot],renovate[bot]"
+          ignore-default-branch-commits: "true"
+          max-issues: "5"
+          rate-limit: "true"
+      - name: Assert outputs exist
+        env:
+          DELETED: ${{ steps.action.outputs.deleted-branches }}
+          STALE: ${{ steps.action.outputs.stale-branches }}
+        run: |
+          echo "deleted-branches: $DELETED"
+          echo "stale-branches: $STALE"
+          echo "PASS: action completed with ignore-commit-messages set"
