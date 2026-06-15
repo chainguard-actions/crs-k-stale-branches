@@ -1,0 +1,29 @@
+name: Test basic usage
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          repo-token: ${{ github.token }}
+          days-before-stale: "90"
+          days-before-delete: "150"
+          max-issues: "10"
+          dry-run: "true"
+          ignore-issue-interaction: "true"
+          rate-limit: "false"
+        continue-on-error: true
+      - name: Assert action ran
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "skipped" ]; then
+            echo "FAIL: action was skipped"
+            exit 1
+          fi
+          echo "PASS: action ran (outcome=$OUTCOME)"

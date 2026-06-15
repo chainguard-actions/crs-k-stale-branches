@@ -1,6 +1,11 @@
 {
   "owner": "crs-k",
   "repo": "stale-branches",
-  "version": "",
-  "url": "https://github.com/crs-k/stale-branches"
+  "version": "v8.2.2",
+  "commit_sha": "865501af01284d43aef267d4b9aab0f9f1734b12",
+  "url": "https://github.com/crs-k/stale-branches",
+  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
+  "test_agent_version": "1",
+  "harden_agent_version": "1"
 }
