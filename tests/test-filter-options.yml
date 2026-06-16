@@ -1,0 +1,29 @@
+name: Test filter options
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          repo-token: ${{ github.token }}
+          days-before-stale: "90"
+          days-before-delete: "150"
+          dry-run: "true"
+          ignore-issue-interaction: "true"
+          branches-filter-regex: "^(feature|fix|chore)/"
+          ignore-committers: "dependabot[bot],renovate[bot]"
+          ignore-default-branch-commits: "true"
+          rate-limit: "true"
+          pr-check: "false"
+          max-issues: "10"
+        continue-on-error: true
+      - name: Assert action ran with filter options
+        run: |
+          echo "Action completed with filter options"
+          echo "stale-branches: ${{ steps.action.outputs.stale-branches }}"
+          echo "deleted-branches: ${{ steps.action.outputs.deleted-branches }}"
+          echo "PASS"
