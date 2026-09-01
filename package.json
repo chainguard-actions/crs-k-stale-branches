@@ -1,0 +1,67 @@
+{
+  "name": "@crs-k/stale-branches",
+  "version": "0.0.0",
+  "private": true,
+  "author": "Chris Kerins",
+  "license": "MIT",
+  "description": "Finds and deletes stale branches",
+  "main": "lib/main.js",
+  "homepage": "https://github.com/marketplace/actions/stale-branches",
+  "bugs": {
+    "url": "https://github.com/crs-k/stale-branches/issues"
+  },
+  "scripts": {
+    "audit": "npm audit --audit-level=low",
+    "build": "tsc",
+    "format": "prettier --write src/**/*.ts",
+    "format-check": "prettier --check src/**/*.ts",
+    "lint": "npm run npmpackagejsonlint . && npm run eslint",
+    "eslint": "eslint src/**/*.ts",
+    "npmpackagejsonlint": "npmPkgJsonLint .",
+    "package": "esbuild lib/main.js --bundle --platform=node --conditions=import --outfile=dist/index.js --sourcemap",
+    "test": "jest --coverage",
+    "all": "npm run format && npm run lint && npm test && npm run build && npm run package && npm run audit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/crs-k/stale-branches.git"
+  },
+  "keywords": [
+    "actions"
+  ],
+  "dependencies": {
+    "@actions/core": "3.0.1",
+    "@actions/github": "9.1.1",
+    "@octokit/types": "16.0.0",
+    "@types/semver": "7.7.1",
+    "assert": "2.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.29.7",
+    "@babel/preset-env": "7.29.7",
+    "@babel/preset-typescript": "7.29.7",
+    "@eslint/js": "10.0.1",
+    "@types/jest": "30.0.0",
+    "@types/node": "26.1.1",
+    "@typescript-eslint/eslint-plugin": "8.65.0",
+    "@typescript-eslint/parser": "8.65.0",
+    "esbuild": "0.28.1",
+    "ansi-styles": "5.2.0",
+    "babel-jest": "30.4.1",
+    "eslint": "10.8.0",
+    "globals": "17.8.0",
+    "jest": "30.4.2",
+    "js-yaml": "5.2.2",
+    "npm-package-json-lint": "10.4.1",
+    "prettier": "3.9.6",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": "^22.13.0 || >=24"
+  },
+  "overrides": {
+    "glob": "13.0.6",
+    "minimatch": "10.2.5",
+    "test-exclude": "7.0.2"
+  }
+}

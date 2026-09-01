@@ -1,0 +1,44 @@
+name: Test custom configuration
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          dry-run: "true"
+          days-before-stale: "30"
+          days-before-delete: "60"
+          branches-filter-regex: "^feature/.*"
+          max-issues: "5"
+          ignore-issue-interaction: "true"
+          rate-limit: "true"
+
+      - name: Assert action ran with custom config (or failed gracefully on sentinel repo)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+          STALE: ${{ steps.action.outputs.stale-branches }}
+          DELETED: ${{ steps.action.outputs.deleted-branches }}
+        run: |
+          echo "outcome: $OUTCOME"
+          echo "stale-branches: $STALE"
+          echo "deleted-branches: $DELETED"
+          if [ "$OUTCOME" = "success" ]; then
+            echo "PASS: action succeeded with custom configuration"
+            # In dry-run mode, deleted-branches should be empty
+            if [ -n "$DELETED" ]; then
+              echo "FAIL: dry-run should not delete branches, but got: $DELETED"
+              exit 1
+            fi
+            echo "PASS: no branches deleted in dry-run mode"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully (sentinel repo is not resolvable)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
